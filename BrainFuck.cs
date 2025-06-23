@@ -26,11 +26,22 @@ public class BrainFuck
                 Console.Write($"({runner.mc:X3}) ");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 line = Console.ReadLine();
-                if (line == "quit") break;
+                if (line == "quit" || line == "exit")
+                {
+                    break;
+                }
+                else if (line == "dump")
+                {
+                    runner.FullDump();
+                }
+                else
+                {
+                    runner.pc = 0;
+                    runner.Execute(line);
+                    runner.DumpContext(8);
+                }
 
-                runner.pc = 0;
-                runner.Execute(line);
-                runner.DumpContext(8);
+
             }
             Console.WriteLine("Bye!");
         }
@@ -39,6 +50,21 @@ public class BrainFuck
     private static int Emod(int n, int d)
     {
         return ((n % d) + d) % d;
+    }
+
+    private void FullDump()
+    {
+        for (int i = 0; i < memory.Length; i++)
+        {
+            if (i % 32 == 0)
+            {
+                Console.WriteLine();
+                Console.Write($"{i:X3}: ");
+            }
+            Console.ForegroundColor = i == mc ? ConsoleColor.Green : ConsoleColor.White;
+            Console.Write($"{memory[i]:X2} ");
+        }
+        Console.WriteLine();
     }
 
     private void DumpContext(int ctxSize)
