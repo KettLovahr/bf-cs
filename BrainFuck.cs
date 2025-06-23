@@ -36,7 +36,6 @@ public class BrainFuck
                 }
                 else
                 {
-                    runner.pc = 0;
                     runner.Execute(line);
                     runner.DumpContext(8);
                 }
@@ -126,6 +125,7 @@ public class BrainFuck
             }
             pc++;
         }
+        pc = 0;
     }
 
     private class Stack
