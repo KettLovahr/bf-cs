@@ -8,50 +8,13 @@ public class BrainFuck
     byte[] memory = new byte[4096];
     Stack stack = new Stack();
 
-    public static void Main(string[] args)
-    {
-        BrainFuck runner = new BrainFuck();
-        if (args.Length == 1)
-        {
-            string code = File.ReadAllText(args[0]);
-            runner.Execute(code);
-        }
-        else
-        {
-            Console.WriteLine("No file specified, running REPL...");
-            string line = "";
-            while (true)
-            {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write($"({runner.mc:X3}) ");
-                Console.ForegroundColor = ConsoleColor.Gray;
-                line = Console.ReadLine();
-                if (line == "quit" || line == "exit")
-                {
-                    break;
-                }
-                else if (line == "dump")
-                {
-                    runner.FullDump();
-                }
-                else
-                {
-                    runner.Execute(line);
-                    runner.DumpContext(8);
-                }
-
-
-            }
-            Console.WriteLine("Bye!");
-        }
-    }
 
     private static int Emod(int n, int d)
     {
         return ((n % d) + d) % d;
     }
 
-    private void FullDump()
+    public void FullDump()
     {
         for (int i = 0; i < memory.Length; i++)
         {
@@ -66,7 +29,7 @@ public class BrainFuck
         Console.WriteLine();
     }
 
-    private void DumpContext(int ctxSize)
+    public void DumpContext(int ctxSize)
     {
         for (int i = mc - ctxSize / 2; i <= mc + ctxSize / 2; i++)
         {
@@ -75,6 +38,16 @@ public class BrainFuck
             Console.Write($"{memory[f]:X2} ");
         }
         Console.WriteLine();
+    }
+
+    public int GetProgramCounter()
+    {
+        return pc;
+    }
+
+    public int GetMemoryCursor()
+    {
+        return mc;
     }
 
     public void Execute(string code)
