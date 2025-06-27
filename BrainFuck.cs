@@ -3,9 +3,9 @@ using System.IO;
 
 public class BrainFuck
 {
-    int pc = 0;
-    int mc = 0;
-    byte[] memory = new byte[4096];
+    private int pc = 0;
+    private int mc = 0;
+    private byte[] memory = new byte[4096];
     Stack stack = new Stack();
 
 
@@ -48,6 +48,11 @@ public class BrainFuck
     public int GetMemoryCursor()
     {
         return mc;
+    }
+
+    public int GetValueFromAddress(int addr)
+    {
+        return memory[addr];
     }
 
     public void Execute(string code)
