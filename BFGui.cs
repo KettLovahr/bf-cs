@@ -83,7 +83,7 @@ public class BFGui
     }
     public class Editor : Window
     {
-        public string contents;
+        public string contents = "";
 
         public Editor() : base(100, 400, 400, 28, "Editor")
         {
@@ -92,7 +92,12 @@ public class BFGui
 
         public override void DrawWindowContents()
         {
-            DrawText(contents, GetX() + 4, GetY() + 4, 20, WHITE);
+            int offset = 0;
+            for (int i = 0; i < contents.Length; i++)
+            {
+                if (i > 0) offset += MeasureText(contents[i - 1].ToString(), 20) + 1;
+                DrawText(contents[i].ToString(), GetX() + 4 + offset, GetY() + 4, 20, BFGui.runner.GetProgramCounter() == i ? GREEN : WHITE);
+            }
         }
 
         public override void Process()

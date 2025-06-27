@@ -22,6 +22,7 @@ public class Raylib
     [DllImport("raylib")] public static extern void DrawRectangle(int posX, int posY, int width, int height, Color color);
     [DllImport("raylib")] public static extern void DrawRectangleLines(int posX, int posY, int width, int height, Color color);
     [DllImport("raylib")] public static extern void DrawText(string text, int posX, int posY, int fontSize, Color color);
+    [DllImport("raylib")] public static extern int MeasureText(string text, int size);
 
     [DllImport("raylib")] public static extern int GetScreenWidth();
     [DllImport("raylib")] public static extern int GetScreenHeight();
