@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 
 public class BrainFuck
 {
@@ -55,7 +56,7 @@ public class BrainFuck
         return memory[addr];
     }
 
-    public void Execute(string code)
+    public void Execute(string code, int delay = 0)
     {
         while (pc < code.Length)
         {
@@ -100,6 +101,10 @@ public class BrainFuck
                 case '.':
                     Console.Write((char)memory[mc]);
                     break;
+            }
+            if (delay != 0.0)
+            {
+                Thread.Sleep(delay);
             }
             pc++;
         }

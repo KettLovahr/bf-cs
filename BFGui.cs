@@ -42,11 +42,11 @@ public class BFGui
         }
     }
 
-    public static void Execute(string code)
+    public static void Execute(string code, int delay = 0)
     {
         if (executorThread == null || !executorThread.IsAlive)
         {
-            executorThread = new Thread(() => runner.Execute(code));
+            executorThread = new Thread(() => runner.Execute(code, delay));
             executorThread.Start();
         }
     }
@@ -85,7 +85,7 @@ public class BFGui
     {
         public string contents = "";
 
-        public Editor() : base(100, 400, 400, 28, "Editor")
+        public Editor() : base(20, 400, 600, 28, "Editor")
         {
 
         }
