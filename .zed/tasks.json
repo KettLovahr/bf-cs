@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Run BrainFuck CLI",
+    "command": "nix develop --command bash build.sh runcli"
+  },
+  {
+    "label": "Run BrainFuck GUI",
+    "command": "nix develop --command bash build.sh rungui"
+  }
+]
