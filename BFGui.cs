@@ -7,6 +7,7 @@ public class BFGui
 {
     public static BrainFuck runner;
     private static Thread executorThread;
+    private static bool slow;
 
 
     public static void Main()
@@ -17,6 +18,7 @@ public class BFGui
         WindowManager winmgr = new WindowManager();
         winmgr.AddWindow(new MemoryViewer());
         winmgr.AddWindow(new Editor());
+        winmgr.AddWindow(new ExecutionOptions());
 
         while (!WindowShouldClose())
         {
@@ -117,7 +119,43 @@ public class BFGui
             }
             if (IsKeyPressed(KeyboardKey.ENTER))
             {
-                BFGui.Execute(contents);
+                BFGui.Execute(contents, slow ? 20 : 0);
+            }
+        }
+    }
+    public class ExecutionOptions : Window
+    {
+        public ExecutionOptions() : base(400, 100, 200, 240, "Execution Options")
+        {
+
+        }
+
+        public override void DrawWindowContents()
+        {
+            DrawRectangle(GetX() + 20, GetY() + 20, 20, 20, BLACK);
+            if (slow)
+            {
+                DrawRectangle(GetX() + 22, GetY() + 22, 16, 16, GREEN);
+            }
+
+            DrawText("Slow Run", GetX() + 50, GetY() + 20, 20, BLACK);
+        }
+
+        public override void Process()
+        {
+            if (IsFocused())
+            {
+                int mouseX = GetMouseX();
+                int mouseY = GetMouseY();
+
+                if (mouseX > GetX() + 20 && mouseX < GetX() + MeasureText("Slow Run", 20) + 20)
+                {
+                    if (mouseY > GetY() + 20 && mouseY < GetY() + 40)
+                    {
+                        if (IsMouseButtonReleased(MouseButton.LEFT))
+                            slow ^= true;
+                    }
+                }
             }
         }
     }

@@ -56,6 +56,7 @@ public class KettGui
                     }
                     else if (window.IsPositionInBounds(mouseX, mouseY))
                     {
+                        focused = window;
                         break; // TODO: This window will consume the input
                     }
                 }
@@ -95,6 +96,11 @@ public class KettGui
         {
             focused = focus;
         }
+        public bool IsFocused()
+        {
+            return focused;
+        }
+
         public void SetMoveHandle(int x, int y)
         {
             dragHandleX = x;
