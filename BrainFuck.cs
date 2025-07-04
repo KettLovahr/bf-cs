@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading;
 
 public class BrainFuck
@@ -13,6 +15,22 @@ public class BrainFuck
     private static int Emod(int n, int d)
     {
         return ((n % d) + d) % d;
+    }
+
+    public static string Sanitize(string code)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        char[] allowed = { '+', '-', '>', '<', '[', ']', ',', '.' };
+
+        foreach (char c in code)
+        {
+            if (allowed.Contains(c))
+            {
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
     }
 
     public void FullDump()

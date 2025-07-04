@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 using static Raylib;
 using static KettGui;
@@ -10,14 +11,27 @@ public class BFGui
     private static bool slow;
 
 
-    public static void Main()
+    public static void Main(string[] args)
     {
+        string contents = "";
+        if (args.Length == 1)
+        {
+            contents = File.ReadAllText(args[0]);
+        }
         InitWindow(640, 480, "BrainFuck");
         runner = new BrainFuck();
 
         WindowManager winmgr = new WindowManager();
         winmgr.AddWindow(new MemoryViewer());
-        winmgr.AddWindow(new Editor());
+
+        Editor editor = new Editor();
+        winmgr.AddWindow(editor);
+
+        if (contents != "")
+        {
+            editor.contents = BrainFuck.Sanitize(contents);
+        }
+
         winmgr.AddWindow(new ExecutionOptions());
 
         while (!WindowShouldClose())
